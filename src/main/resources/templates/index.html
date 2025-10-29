@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis raices</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/estilos/style-index.css}">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+<div th:replace="~{fragmentos :: nav-bar(paginaActual='inicio',
+cantidadTotal=${cantidadTotal != null} ? ${cantidadTotal} : 0)}"></div>
+
+<section class="banner d-flex align-items-center justify-content-center">
+  <div class="text-center">
+    <h1 class="fw-bold">Bienvenido a nuestra tienda</h1>
+    <p>Estilo, historia y encanto en cada producto</p>
+    <a th:href="@{/productos}" class="btn btn-vintage mt-3">Todos los Productos</a>
+  </div>
+</section>
+
+<section class="container my-5">
+  <h2 class="text-center mb-4">Productos Destacados</h2>
+  <div class="row g-4 d-flex justify-content-center">
+
+    <div class="col-md-4 col-sm-6" th:each="producto : ${productosDestacados}">
+      <div class="card product-card h-100">
+        <a th:href="@{/producto-card/{id}(id=${producto.id})}" class="text-decoration-none text-dark">
+          <div class="card-img-top-container">
+            <img th:src="@{${producto.urlImagen}}" class="card-img-top" th:alt="${producto.nombre}">
+          </div>
+          <div class="card-body text-center d-flex flex-column justify-content-between p-2">
+            <h5 class="card-title" th:text="${producto.nombre}">Nombre del Producto</h5>
+            <p class="card-text fw-bold" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 0, 'POINT', 0, 'COMMA')}">$1.500</p>
+          </div>
+        </a>
+        <div class="card-footer text-center border-0 bg-transparent pt-0 pb-3">
+          <form th:action="@{/carrito/agregar}" method="post" class="d-inline">
+            <input type="hidden" name="id" th:value="${producto.id}">
+            <button type="submit" class="btn btn-vintage w-100">Agregar al carrito</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(productosDestacados)}" class="col-12 text-center">
+      <p class="lead">No hay productos destacados disponibles por el momento.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="vintage-footer text-center py-3">
+  <div class="social-icons mb-2">
+    <a href="#" target="_blank"><i class="bi bi-facebook"></i></a>
+    <a href="#" target="_blank"><i class="bi bi-instagram"></i></a>
+    <a href="#" target="_blank"><i class="bi bi-whatsapp"></i></a>
+    <a href="#" target="_blank"><i class="bi bi-geo-alt"></i></a>
+  </div>
+  <p>&copy; 2025 Mis raices | Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

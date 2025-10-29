@@ -1,0 +1,211 @@
+/* =====================
+   ESTILOS GENERALES
+===================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdf6ec;
+  color: #4a3f35;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* =====================
+   NAVBAR
+===================== */
+.vintage-nav {
+  background-color: #c9b79c;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-bottom: 2px solid #b2997f;
+  z-index: 1000;
+}
+
+.vintage-nav .navbar-brand {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #4a3f35;
+  text-shadow: 1px 3px 2px #67584a, 3px 13px 5px #7a6959;
+  transition: all 0.3s ease;
+}
+
+.vintage-nav .navbar-brand:hover {
+  font-weight: 1000;
+}
+
+.vintage-nav .nav-link {
+  color: #4a3f35;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.vintage-nav .nav-link:hover {
+  color: #7a5c3e;
+}
+
+/* =====================
+   BANNER / HERO SECTION
+===================== */
+.banner {
+  background:
+    linear-gradient(rgba(30, 30, 30, 0.493), rgba(47, 47, 47, 0.4)),
+    url('/estilos/imagenes/familia-index.jpg') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 450px;
+  position: relative;
+  color: #FFF8E7;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.banner h1 {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.banner p {
+  font-size: 1.2rem;
+}
+
+/* Botón del banner */
+.btn-vintage {
+  background-color: #a67c52;
+  border: none;
+  color: #FFF8E7;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-vintage:hover {
+  background-color: #8c6239;
+  transform: scale(1.05);
+}
+
+/* =====================
+   TARJETAS DE PRODUCTOS
+===================== */
+.product-card {
+  border: none;
+  background-color: #fffaf3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-card .card-img-top-container {
+  height: 200px;
+  overflow: hidden;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+/* Imagen dentro del contenedor */
+.product-card .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Permite que el texto crezca */
+.product-card .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+
+.product-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #4a3f35;
+}
+
+.product-card .card-text {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #a67c52;
+  font-weight: bold;
+}
+
+/* Pie de tarjeta: Empuja el botón al final de la tarjeta */
+.card-footer {
+  padding: 0 1rem 1rem;
+  margin-top: auto;
+  border-top: none;
+  background-color: transparent;
+}
+
+/* Ajuste específico para el botón dentro del footer de la tarjeta */
+.card-footer .btn-vintage {
+  padding: 10px 15px;
+  width: 100%;
+}
+
+/* =====================
+   FOOTER
+===================== */
+.vintage-footer {
+  background-color: #c9b79c;
+  color: #4a3f35;
+  text-align: center;
+  padding: 20px 15px;
+  font-family: 'Poppins', sans-serif;
+  margin-top: auto;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.vintage-footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.vintage-footer .social-icons a {
+  color: #4a3f35;
+  font-size: 1.6rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.vintage-footer .social-icons a:hover {
+  color: #7a5c3e;
+  transform: scale(1.2);
+}
+
+.vintage-footer p {
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.9;
+}

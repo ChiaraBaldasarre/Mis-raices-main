@@ -1,0 +1,254 @@
+/* =====================
+   ESTILOS GENERALES
+===================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdf6ec;
+  color: #4a3f35;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden; /* evita scroll horizontal innecesario */
+}
+.contacto {
+    background-color: #fdf6ec;
+    flex: 1; /* Permite que la sección crezca y empuje el footer hacia abajo */
+}
+/* =====================
+   NAVBAR
+===================== */
+.vintage-nav {
+  background-color: #c9b79c;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* sombra suave */
+  border-bottom: 2px solid #b2997f; /* línea fina para delimitar */
+}
+
+.vintage-nav .navbar-brand {
+  font-family: 'georgia', sans-serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #4a3f35;
+text-shadow: 1px 3px 2px #67584a, 3px 13px 5px #7a6959;
+}
+.vintage-nav .navbar-brand:hover {
+  font-family: 'georgia', sans-serif;
+  font-weight: 1000;
+  font-size: 1.9rem;
+  color: #4a3f35;
+text-shadow: 1px 3px 0 #67584a, 3px 13px 2px #7a6959;
+transition: all 0.3s ease;
+}
+
+.vintage-nav .nav-link {
+  font-family: 'Poppins', sans-serif;
+  color: #4a3f35;
+  font-weight: 400;
+  transition: color 0.3s ease;
+  text-shadow: none;
+}
+
+.vintage-nav .nav-link:hover {
+  color: #7a5c3e;
+}
+
+.vintage-nav .nav-link::after {
+  content: '';
+  display: block;
+  margin: 5px auto 0;
+  height: 2px;
+  width: 0;
+  background: #7a5c3e;
+  transition: width 0.3s ease;
+}
+
+.vintage-nav .nav-link:hover::after {
+  width: 80%;
+}
+
+/* =====================
+   ICONO CARRITO
+===================== */
+/* Se utiliza la clase estandarizada y se elimina el posicionamiento absoluto/fijo antiguo */
+.cart-icon-nav-fixed {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+
+  color: #4a3f35;
+  font-size: 1.8rem;
+  z-index: 1050;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-icon-nav-fixed:hover {
+  color: #8c6239;
+  transform: scale(1.1);
+}
+
+.cart-icon-nav-fixed .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #a67c52;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+/* =====================
+   ICONOS CONTACTO
+===================== */
+
+.contact-info i {
+    color: #a67c52; /* color principal vintage */
+    transition: color 0.3s ease;
+    font-size: 2rem;
+}
+
+.contact-info i:hover {
+    color: #8c6239;
+}
+
+/* =====================
+   SECCIÓN CONTACTO
+===================== */
+.contacto {
+  padding: 60px 20px;
+  text-align: center;
+  flex: 1;
+}
+
+/* INFO CONTACTO */
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 60px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-item p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* FORMULARIO */
+.contact-form {
+  /* La clase bg-light p-4 rounded shadow-sm del HTML reemplaza estas propiedades */
+  /* Mantengo las propiedades de tipografía */
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+
+.contact-form h2 {
+  font-family: 'georgia', serif;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #4a3f35;
+}
+
+input, textarea {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #c9b79c;
+  border-radius: 10px;
+  background-color: #fffaf3;
+  font-size: 1rem;
+  color: #4a3f35;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #7a5c3e;
+  box-shadow: 0 0 5px rgba(122, 92, 62, 0.4);
+}
+
+.contact-form button {
+    background-color: #a67c52;
+    color: #FFF8E7;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #8c6239;
+    transform: scale(1.05);         /* Pequeño zoom */
+}
+
+/* =====================
+   FOOTER
+===================== */
+.vintage-footer {
+  background-color: #c9b79c;
+  color: #4a3f35;
+  text-align: center;
+  padding: 20px 15px; /* footer más compacto */
+  font-family: 'Poppins', sans-serif;
+  margin-top: auto;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Redes sociales */
+.vintage-footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.vintage-footer .social-icons a {
+  color: #4a3f35;
+  font-size: 1.6rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.vintage-footer .social-icons a:hover {
+  color: #7a5c3e;
+  transform: scale(1.2); /* hover animado más sutil */
+}
+
+.vintage-footer p {
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .contact-info {
+    gap: 25px;
+  }
+
+  .contact-form {
+    padding: 25px 20px;
+  }
+
+  .contact-form h2 {
+    font-size: 1.6rem;
+  }
+}

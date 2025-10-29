@@ -1,0 +1,194 @@
+/* =====================
+   ESTILOS GENERALES
+===================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdf6ec;
+  color: #4a3f35;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  flex: 1 0 auto; /* Body flexible */
+}
+
+/* =====================
+   NAVBAR
+===================== */
+.vintage-nav {
+  background-color: #c9b79c;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-bottom: 2px solid #b2997f;
+}
+
+.vintage-nav .navbar-brand {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #4a3f35;
+  text-shadow: 1px 3px 2px #67584a, 3px 13px 5px #7a6959;
+  transition: all 0.3s ease;
+}
+
+.vintage-nav .navbar-brand:hover {
+  font-weight: 1000;
+  text-shadow: 1px 3px 0 #67584a, 3px 13px 2px #7a6959;
+}
+
+.vintage-nav .nav-link {
+  color: #4a3f35;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.vintage-nav .nav-link:hover {
+  color: #7a5c3e;
+}
+
+.vintage-nav .nav-link::after {
+  content: '';
+  display: block;
+  margin: 5px auto 0;
+  height: 2px;
+  width: 0;
+  background: #7a5c3e;
+  transition: width 0.3s ease;
+}
+
+.vintage-nav .nav-link:hover::after {
+  width: 80%;
+}
+
+/* =====================
+   ICONO CARRITO (CORREGIDO)
+===================== */
+.cart-icon-nav-fixed {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+
+  color: #4a3f35;
+  font-size: 1.8rem;
+  z-index: 1050;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-icon-nav-fixed:hover {
+  color: #8c6239;
+  transform: scale(1.1);
+}
+
+.cart-icon-nav-fixed .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #a67c52;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+/* =====================
+   SECCIÓN NOSOTROS
+===================== */
+.nosotros {
+  background-image: url('/estilos/imagenes/familia-nosotros.jpg');
+  background-size: cover;
+  background-position: center;
+  flex: 1;
+  position: relative;
+  color: #FFF8E7;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.nosotros .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(50, 35, 20, 0.45);
+  z-index: 0;
+}
+
+.nosotros h1,
+.nosotros p {
+  position: relative;
+  z-index: 1;
+  color: #FFF8E7;
+}
+
+.nosotros h1 {
+  font-size: 3rem;
+}
+
+.nosotros p {
+  font-size: 1.1rem;
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* =====================
+   FOOTER
+===================== */
+.vintage-footer {
+  background-color: #c9b79c;
+  color: #4a3f35;
+  text-align: center;
+  padding: 20px 15px; /* footer más compacto */
+  font-family: 'Poppins', sans-serif;
+  margin-top: auto;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Redes sociales */
+.vintage-footer .social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.vintage-footer .social-icons a {
+  color: #4a3f35;
+  font-size: 1.6rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.vintage-footer .social-icons a:hover {
+  color: #7a5c3e;
+  transform: scale(1.2);
+}
+
+.vintage-footer p {
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .nosotros h1 {
+    font-size: 2.2rem;
+  }
+
+  .nosotros p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}

@@ -1,0 +1,83 @@
+# ===============================================
+# IGNORAR ARCHIVOS DE SPRING BOOT / COMPILACIÓN
+# ===============================================
+
+# Directorios y artefactos de Maven (Archivos de compilación)
+/target/
+HELP.md
+# Esto ignora el .jar dentro de /wrapper/ si existe
+.mvn/wrapper/maven-wrapper.jar 
+# El siguiente patrón (del original) no es necesario y puede ser confuso, se ha eliminado:
+# !**/src/main/**/target/
+# !**/src/test/**/target/
+
+# Logs y bases de datos locales (H2 o archivos SQLite)
+*.log
+*.h2.db
+*.sqlite
+
+# ===============================================
+# IGNORAR ARCHIVOS DE IDEs (Entorno de Desarrollo)
+# ===============================================
+
+### STS / Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+# Patrones de build específicos de NetBeans que pueden ignorarse sin excepciones
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# Archivos de OS/Mac
+.DS_Store
+Thumbs.db
+
+# ===============================================
+# ARCHIVOS SENSIBLES / CREDENCIALES (¡CRUCIAL!)
+# ===============================================
+
+# 1. Ignorar el archivo principal de configuración
+# Este archivo contiene tu usuario y contraseña de MySQL (root, sin password)
+# Al ignorarlo, proteges tus credenciales en el repositorio.
+# spring.datasource.url=jdbc:mysql://localhost:3306/...
+/src/main/resources/application.properties
+
+# 2. Archivos de propiedades sensibles adicionales (si existen)
+application-dev.properties
+application-prod.properties
+*.yaml
+*.yml
+# Para credenciales en un proyecto real, es buena práctica usar un archivo de configuración
+# separado para producción o variables de entorno.
+
+# ===============================================
+# EXCEPCIÓN RECOMENDADA
+# ===============================================
+
+# Se recomienda mantener un archivo de propiedades con valores de configuración
+# NO sensibles (como el puerto, nombre de la app) en un archivo de plantilla.
+# Si quieres IGNORAR el principal, puedes crear un 'application.properties.template' 
+# con la configuración de la base de datos vacía (p.ej., username=PLACEHOLDER) 
+# y luego añadir la excepción:
+# !/src/main/resources/application.properties.template

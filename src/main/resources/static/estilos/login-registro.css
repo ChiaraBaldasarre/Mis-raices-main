@@ -1,0 +1,103 @@
+/* =====================
+   ESTILOS GENERALES Y FONDO
+===================== */
+
+/* Aplicamos un fondo envolvente para el área del formulario */
+.login-body {
+    background:
+        linear-gradient(rgba(74, 63, 53, 0.4), rgba(74, 63, 53, 0.6)), /* Capa oscura para mejor contraste */
+        url('/estilos/imagenes/familia-index.jpg') center/cover no-repeat; /* Usamos la imagen de tu banner */
+    background-attachment: fixed; /* Mantiene el fondo fijo al desplazarse (aunque la página no se desplace) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 15px; /* Padding para móvil */
+}
+
+/* Ocultamos el footer en estas páginas para que no interfiera con el fondo principal */
+.vintage-footer {
+    display: none;
+}
+
+/* =====================
+   TARJETA DEL FORMULARIO
+===================== */
+.form-card {
+    background-color: #fffaf3; /* Fondo color crema para suavizar el blanco */
+    border: 1px solid #d6c7b3;
+    padding: 30px;
+    border-radius: 12px; /* Esquinas más redondeadas */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Sombra más profunda para destacarse */
+    width: 100%;
+    max-width: 400px; /* Limita el ancho del formulario */
+    color: #4a3f35;
+    text-align: center;
+}
+
+.form-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #a67c52; /* Color vintage para el título */
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+
+.form-card .form-label {
+    font-weight: 500;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    color: #4a3f35;
+}
+
+/* Estilo para los campos de entrada */
+.form-card .form-control {
+    border-radius: 6px;
+    border: 1px solid #c9b79c;
+    padding: 10px;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s;
+}
+
+.form-card .form-control:focus {
+    border-color: #8c6239;
+    box-shadow: 0 0 0 0.25rem rgba(139, 107, 73, 0.25);
+    background-color: #ffffff;
+}
+
+/* El botón vintage ya está definido, solo nos aseguramos que funcione bien */
+.btn-vintage {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 1.1rem;
+}
+
+/* Estilo para el enlace de "¿Ya tienes cuenta?" */
+.form-card .mt-3 a {
+    color: #a67c52;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.form-card .mt-3 a:hover {
+    color: #8c6239;
+}
+
+/* Estilos de mensajes (éxito/error) */
+.alert {
+    border-radius: 8px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
