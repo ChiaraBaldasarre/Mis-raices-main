@@ -1,103 +1,94 @@
 package com.tienda.service;
 
-import com.tienda.model.Producto;
 import com.tienda.model.ItemCarrito;
+import com.tienda.model.Producto;
+import com.tienda.model.Usuario;
+import com.tienda.repository.CarritoItemRepository;
 import com.tienda.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.ArrayList;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CarritoService {
+
+    @Autowired
+    private CarritoItemRepository carritoItemRepository;
 
     @Autowired
     private ProductoRepository productoRepository;
 
-    private List<ItemCarrito> items = new ArrayList<>();
+    public List<ItemCarrito> obtenerCarritoPorUsuario(Usuario usuario) {
+        return carritoItemRepository.findByUsuario(usuario);
+    }
 
-    public void agregarProducto(Long productoId, int cantidad) {
-        Optional<Producto> productoOpt = productoRepository.findById(productoId);
+    @Transactional
+    public void agregarProducto(Usuario usuario, Long productoId, int cantidad) {
+        Producto producto = productoRepository.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + productoId));
 
-        if (productoOpt.isPresent()) {
-            Producto producto = productoOpt.get();
+        if (producto.getStock() < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
+        }
 
-            if (producto.getStock() < cantidad) {
+        Optional<ItemCarrito> itemExistenteOpt = carritoItemRepository.findByUsuarioAndProductoId(usuario, productoId);
+
+        if (itemExistenteOpt.isPresent()) {
+            ItemCarrito item = itemExistenteOpt.get();
+            int nuevaCantidad = item.getCantidad() + cantidad;
+
+            if (producto.getStock() < nuevaCantidad) {
                 throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
             }
 
-            Optional<ItemCarrito> itemExistente = items.stream()
-                    .filter(item -> item.getProducto().getId().equals(producto.getId()))
-                    .findFirst();
-
-            if (itemExistente.isPresent()) {
-                int nuevaCantidad = itemExistente.get().getCantidad() + cantidad;
-                if (producto.getStock() < nuevaCantidad) {
-                    throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
-                }
-                itemExistente.get().setCantidad(nuevaCantidad);
-            } else {
-                items.add(new ItemCarrito(producto, cantidad));
-            }
+            item.setCantidad(nuevaCantidad);
+            carritoItemRepository.save(item);
         } else {
-            throw new RuntimeException("Producto no encontrado con ID: " + productoId);
+            ItemCarrito nuevoItem = new ItemCarrito(usuario, producto, cantidad);
+            carritoItemRepository.save(nuevoItem);
         }
     }
 
-    public void agregarProducto(Long productoId) {
-        agregarProducto(productoId, 1);
-    }
-
-    public void actualizarItem(Long idProducto, int nuevaCantidad) {
+    @Transactional
+    public void actualizarItem(Usuario usuario, Long productoId, int nuevaCantidad) {
         if (nuevaCantidad <= 0) {
-            eliminarItem(idProducto);
+            eliminarItem(usuario, productoId);
             return;
         }
 
-        Optional<ItemCarrito> itemOpt = items.stream()
-                .filter(item -> item.getProducto().getId().equals(idProducto))
-                .findFirst();
+        ItemCarrito item = carritoItemRepository.findByUsuarioAndProductoId(usuario, productoId)
+                .orElseThrow(() -> new RuntimeException("Item no encontrado en el carrito"));
 
-        if (itemOpt.isPresent()) {
-            ItemCarrito item = itemOpt.get();
-            if (item.getProducto().getStock() < nuevaCantidad) {
-                throw new RuntimeException("Stock insuficiente para el producto: " + item.getProducto().getNombre());
-            }
-            item.setCantidad(nuevaCantidad);
+        if (item.getProducto().getStock() < nuevaCantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto: " + item.getProducto().getNombre());
         }
+
+        item.setCantidad(nuevaCantidad);
+        carritoItemRepository.save(item);
     }
 
-    public void eliminarItem(Long idProducto) {
-        items.removeIf(item -> item.getProducto().getId().equals(idProducto));
+    @Transactional
+    public void eliminarItem(Usuario usuario, Long productoId) {
+        Optional<ItemCarrito> itemOpt = carritoItemRepository.findByUsuarioAndProductoId(usuario, productoId);
+        itemOpt.ifPresent(carritoItemRepository::delete);
     }
 
-    public List<ItemCarrito> getItems() {
-        return new ArrayList<>(items);
+    @Transactional
+    public void limpiarCarrito(Usuario usuario) {
+        carritoItemRepository.deleteByUsuario(usuario);
     }
 
-    public Double getTotal() {
+    public Double getTotal(List<ItemCarrito> items) {
         return items.stream()
                 .mapToDouble(ItemCarrito::getSubtotal)
                 .sum();
     }
 
-    public int getCantidadTotalProductos() {
+    public int getCantidadTotalProductos(List<ItemCarrito> items) {
         return items.stream()
                 .mapToInt(ItemCarrito::getCantidad)
                 .sum();
-    }
-
-    public void limpiarCarrito() {
-        items.clear();
-    }
-
-    public boolean estaVacio() {
-        return items.isEmpty();
     }
 }

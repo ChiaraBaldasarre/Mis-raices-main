@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -58,7 +57,7 @@ public class AutenticacionController {
         System.out.println("Password: '" + usuario.getPassword() + "'");
         System.out.println("Longitud password: " + (usuario.getPassword() != null ? usuario.getPassword().length() : "null"));
 
-        // Errores de validación.
+        // Errores de validación
         if (result.hasErrors()) {
             System.out.println("ERRORES DE VALIDACIÓN ENCONTRADOS:");
             for (FieldError error : result.getFieldErrors()) {
@@ -91,7 +90,7 @@ public class AutenticacionController {
         }
         System.out.println("Email disponible: " + usuario.getEmail());
 
-        // Procesamos registro.
+        // Procesamos registro
         try {
             System.out.println("Cifrando contraseña...");
             String passwordCifrada = passwordEncoder.encode(usuario.getPassword());
@@ -103,7 +102,7 @@ public class AutenticacionController {
                 System.out.println("Rol asignado: USER");
             }
 
-            // Guardamos en la db.
+            // Guardamos en la db
             System.out.println("Intentando guardar usuario en la base de datos...");
             System.out.println("Datos del usuario:");
             System.out.println("Username: " + usuario.getUsername());

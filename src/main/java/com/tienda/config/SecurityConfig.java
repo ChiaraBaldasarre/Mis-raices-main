@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/"),
                                 new AntPathRequestMatcher("/productos/**"),
+                                new AntPathRequestMatcher("/producto-card/**"),
                                 new AntPathRequestMatcher("/contacto"),
                                 new AntPathRequestMatcher("/nosotros"),
                                 new AntPathRequestMatcher("/login"),
@@ -34,6 +35,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/img/**"),
                                 new AntPathRequestMatcher("/images/**"),
+                                new AntPathRequestMatcher("/imagenes/**"),
                                 new AntPathRequestMatcher("/webjars/**")
                         ).permitAll()
                         .anyRequest().authenticated()

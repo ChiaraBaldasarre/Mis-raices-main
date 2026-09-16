@@ -8,7 +8,6 @@ import com.tienda.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +26,10 @@ public class PedidoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private CarritoService carritoService;
-
     @Transactional
-    public Pedido crearPedidoDesdeCarrito(Usuario usuario, String direccion, String contacto) {
+    public Pedido crearPedidoDesdeCarrito(Usuario usuario, String direccion, String contacto, List<ItemCarrito> itemsCarrito) {
 
-        if (carritoService.estaVacio()) {
+        if (itemsCarrito == null || itemsCarrito.isEmpty()) {
             throw new RuntimeException("El carrito está vacío");
         }
 
@@ -41,9 +37,6 @@ public class PedidoService {
         pedido.setUsuario(usuario);
         pedido.setDireccion(direccion);
         pedido.setContacto(contacto);
-
-        // Convertir items del carrito a items de pedido
-        List<ItemCarrito> itemsCarrito = carritoService.getItems();
         Double total = 0.0;
 
         for (ItemCarrito itemCarrito : itemsCarrito) {
@@ -71,9 +64,6 @@ public class PedidoService {
             usuario.setEsCliente(true);
             usuarioRepository.save(usuario);
         }
-
-        carritoService.limpiarCarrito();
-
         return pedidoGuardado;
     }
 

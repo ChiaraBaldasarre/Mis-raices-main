@@ -11,7 +11,7 @@ public class ContactoService {
     @Autowired
     private ContactoRepository contactoRepository;
 
-    public Contacto guardarMensaje(Contacto contacto) {
-        return contactoRepository.save(contacto);
+    public void guardarMensaje(Contacto contacto) {
+        contactoRepository.save(contacto);
     }
 }

@@ -1,5 +1,6 @@
 package com.tienda.controller;
 
+import com.tienda.model.ItemCarrito;
 import com.tienda.model.Pedido;
 import com.tienda.model.Usuario;
 import com.tienda.service.CarritoService;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 public class CarritoController {
@@ -28,15 +28,24 @@ public class CarritoController {
     @Autowired
     private UsuarioService usuarioService;
 
+    private Usuario obtenerUsuarioActual(Authentication authentication) {
+        String username = authentication.getName();
+        return usuarioService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
     @GetMapping("/carrito")
     public String mostrarCarrito(Model model, Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/login";
         }
 
-        model.addAttribute("itemsCarrito", carritoService.getItems());
-        model.addAttribute("totalCarrito", carritoService.getTotal());
-        model.addAttribute("cantidadTotal", carritoService.getCantidadTotalProductos());
+        Usuario usuario = obtenerUsuarioActual(authentication);
+        List<ItemCarrito> items = carritoService.obtenerCarritoPorUsuario(usuario);
+
+        model.addAttribute("itemsCarrito", items);
+        model.addAttribute("totalCarrito", carritoService.getTotal(items));
+        model.addAttribute("cantidadTotal", carritoService.getCantidadTotalProductos(items));
         return "carrito";
     }
 
@@ -51,7 +60,8 @@ public class CarritoController {
         }
 
         try {
-            carritoService.agregarProducto(id, cantidad);
+            Usuario usuario = obtenerUsuarioActual(authentication);
+            carritoService.agregarProducto(usuario, id, cantidad);
             redirectAttributes.addFlashAttribute("mensaje", "Producto agregado exitosamente.");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -68,7 +78,8 @@ public class CarritoController {
         }
 
         try {
-            carritoService.eliminarItem(id);
+            Usuario usuario = obtenerUsuarioActual(authentication);
+            carritoService.eliminarItem(usuario, id);
             redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado del carrito.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar el producto: " + e.getMessage());
@@ -86,7 +97,8 @@ public class CarritoController {
         }
 
         try {
-            carritoService.actualizarItem(id, cantidad);
+            Usuario usuario = obtenerUsuarioActual(authentication);
+            carritoService.actualizarItem(usuario, id, cantidad);
             redirectAttributes.addFlashAttribute("mensaje", "Cantidad actualizada.");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -105,28 +117,24 @@ public class CarritoController {
             return "redirect:/login";
         }
 
-        if (carritoService.getItems().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "El carrito está vacío");
-            return "redirect:/carrito";
-        }
-
-        if (direccion.trim().isEmpty() || contacto.trim().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Por favor completa todos los campos");
-            return "redirect:/carrito";
-        }
-
         try {
-            String username = authentication.getName();
-            Optional<Usuario> usuarioOptional = usuarioService.findByUsername(username);
+            Usuario usuario = obtenerUsuarioActual(authentication);
+            List<ItemCarrito> items = carritoService.obtenerCarritoPorUsuario(usuario);
 
-            if (!usuarioOptional.isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "Usuario no encontrado");
+            if (items.isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "El carrito está vacío");
                 return "redirect:/carrito";
             }
 
-            Usuario usuario = usuarioOptional.get();
+            if (direccion.trim().isEmpty() || contacto.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Por favor completa todos los campos");
+                return "redirect:/carrito";
+            }
 
-            Pedido pedido = pedidoService.crearPedidoDesdeCarrito(usuario, direccion, contacto);
+            Pedido pedido = pedidoService.crearPedidoDesdeCarrito(usuario, direccion, contacto, items);
+
+            // Limpiamos el carrito de la base de datos tras la compra exitosa
+            carritoService.limpiarCarrito(usuario);
 
             boolean esPrimeraCompra = !usuario.isEsCliente();
 

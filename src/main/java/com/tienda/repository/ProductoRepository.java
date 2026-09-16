@@ -13,7 +13,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query("SELECT p FROM Producto p " +
             "WHERE (:categoria IS NULL OR p.categoria = :categoria) " +
             "AND (:precioMax IS NULL OR p.precio <= :precioMax) " +
-            "AND (:#{#colores == null or #colores.isEmpty()} = TRUE OR p.color IN :colores)")
+            "AND (:colores IS NULL OR p.color IN :colores)")
     List<Producto> buscarPorFiltros(
             @Param("categoria") String categoria,
             @Param("precioMax") Double precioMax,

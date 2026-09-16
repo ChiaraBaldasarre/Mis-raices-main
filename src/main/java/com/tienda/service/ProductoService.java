@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional; // Asegúrate de tener este import
+import java.util.Optional;
 
 @Service
 public class ProductoService {
@@ -23,6 +23,9 @@ public class ProductoService {
     }
 
     public List<Producto> buscarPorFiltros(String categoria, Double precioMax, List<String> colores) {
+        if (colores != null && colores.isEmpty()) {
+            colores = null;
+        }
         return productoRepository.buscarPorFiltros(categoria, precioMax, colores);
     }
 
@@ -37,7 +40,6 @@ public class ProductoService {
 
         Optional<Producto> nino = productoRepository.findTop1ByCategoriaContainingIgnoreCase("Niños");
         nino.ifPresent(destacados::add);
-
         return destacados;
     }
 }
