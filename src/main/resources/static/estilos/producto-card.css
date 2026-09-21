@@ -38,11 +38,6 @@ html, body {
 }
 
 /* =====================
-   ICONO CARRITO
-   El bloque .cart-icon usa el estilo estandarizado del fragmento.
-===================== */
-
-/* =====================
    PRODUCTO DETALLE
 ===================== */
 .producto-detalle {
@@ -78,15 +73,15 @@ html, body {
 .medios-pago {
   font-size: 1.4rem;
   margin-bottom: 15px;
-  display: flex; /* Mejor control del espaciado */
+  display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .medios-pago i {
-  margin-left: 0; /* Eliminar el margen izquierdo ya que usamos gap */
+  margin-left: 0;
   color: #4a3f35;
-  font-size: 1.6rem; /* Hacer el ícono más grande */
+  font-size: 1.6rem;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 

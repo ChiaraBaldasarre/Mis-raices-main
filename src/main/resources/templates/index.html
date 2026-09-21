@@ -12,8 +12,7 @@
 
 <body>
 
-<div th:replace="~{fragmentos :: nav-bar(paginaActual='inicio',
-cantidadTotal=${cantidadTotal != null} ? ${cantidadTotal} : 0)}"></div>
+<th:block th:replace="~{fragmentos :: nav-bar('inicio', ${cantidadTotal})}"></th:block>
 
 <section class="banner d-flex align-items-center justify-content-center">
   <div class="text-center">

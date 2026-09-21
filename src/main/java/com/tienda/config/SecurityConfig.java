@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 new AntPathRequestMatcher("/"),
+                                new AntPathRequestMatcher("/estilos/**"),
                                 new AntPathRequestMatcher("/productos/**"),
                                 new AntPathRequestMatcher("/producto-card/**"),
                                 new AntPathRequestMatcher("/contacto"),

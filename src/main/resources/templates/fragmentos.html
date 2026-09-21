@@ -1,62 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>Fragmentos</title>
 </head>
 <body>
-<!-- Fragmento de navbar -->
-<div th:fragment="nav-bar(paginaActual, cantidadTotal)">
-    <nav class="navbar navbar-expand-lg vintage-nav">
-        <div class="container">
-            <a class="navbar-brand fw-bold" th:href="@{/}">Mis raices</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex" id="navbarNav">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaActual == 'inicio'} ? 'active'" th:href="@{/}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaActual == 'productos'} ? 'active'" th:href="@{/productos}">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaActual == 'contacto'} ? 'active'" th:href="@{/contacto}">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:classappend="${paginaActual == 'nosotros'} ? 'active'" th:href="@{/nosotros}">Nosotros</a>
-                    </li>
-                    <li class="nav-item" th:if="${usuarioActual == null}">
-                        <a class="nav-link" th:classappend="${paginaActual == 'registro'} ? 'active'" th:href="@{/registro}">Registro</a>
-                    </li>
-                    <li class="nav-item" th:if="${usuarioActual == null}">
-                        <a class="nav-link" th:classappend="${paginaActual == 'login'} ? 'active'" th:href="@{/login}">Login</a>
-                    </li>
-                    <li class="nav-item" th:if="${usuarioActual != null}">
-                        <a class="nav-link" th:href="@{/logout}">Cerrar Sesión</a>
-                    </li>
-                </ul>
 
-                <a th:href="@{/carrito}" class="btn btn-vintage position-relative" th:if="${usuarioActual != null}">
+<nav th:fragment="nav-bar(pagina, cantidadTotal)" class="navbar navbar-expand-lg vintage-nav px-4">
+    <div class="container-fluid">
+        <!-- Título / Logo -->
+        <a class="navbar-brand" th:href="@{/}">
+            Mis raíces
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <!-- Enlaces de navegación -->
+            <ul class="navbar-nav align-items-center gap-3">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pagina == 'inicio'} ? 'fw-bold' : ''" th:href="@{/}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pagina == 'productos'} ? 'fw-bold' : ''" th:href="@{/productos}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pagina == 'contacto'} ? 'fw-bold' : ''" th:href="@{/contacto}">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${pagina == 'nosotros'} ? 'fw-bold' : ''" th:href="@{/nosotros}">Nosotros</a>
+                </li>
+
+                <!-- Opción de Cerrar Sesión si está autenticado -->
+                <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="nav-link border-0 bg-transparent" style="cursor: pointer;">Cerrar Sesión</button>
+                    </form>
+                </li>
+            </ul>
+
+            <!-- Botón del Carrito -->
+            <div class="ms-lg-3 mt-3 mt-lg-0">
+                <a th:href="@{/carrito}" class="btn btn-vintage position-relative">
                     <i class="bi bi-cart-fill"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                          th:text="${cantidadTotal}">0</span>
+                          th:text="${cantidadTotal != null ? cantidadTotal : 0}">
+                        0
+                    </span>
                 </a>
             </div>
         </div>
-    </nav>
-</div>
+    </div>
+</nav>
 
-<!-- Fragmento de footer -->
-<div th:fragment="footer">
-    <footer class="vintage-footer">
-        <div class="social-icons">
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-twitter"></i></a>
-        </div>
-        <p>&copy; 2023 Mis Raíces. Todos los derechos reservados.</p>
-    </footer>
-</div>
 </body>
 </html>

@@ -11,7 +11,8 @@
 </head>
 
 <body>
-<div th:replace="~{fragmentos :: nav-bar('producto-card', ${cantidadTotal})}"></div>
+
+<th:block th:replace="~{fragmentos :: nav-bar('producto-card', ${cantidadTotal})}"></th:block>
 
 <section class="container my-5 producto-detalle">
   <h2 class="text-center mb-4 producto-nombre" th:text="${producto.nombre}">Nombre del Producto</h2>

@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProductosController {
@@ -15,26 +18,26 @@ public class ProductosController {
     @Autowired
     private ProductoService productoService;
 
+    @GetMapping("/api/filtros-config")
+    @ResponseBody
+    public Map<String, Object> getConfigFiltros() {
+        return productoService.obtenerFiltrosDisponibles();
+    }
+
     @GetMapping("/productos")
     public String listarProductos(
-            @RequestParam(value = "categoria", required = false) String categoria,
-            @RequestParam(value = "precioMax", required = false) Double precioMax,
-            @RequestParam(value = "color", required = false) List<String> colores,
+            @RequestParam(required = false) String categoria,
+            @RequestParam(required = false) Double precioMax,
+            @RequestParam(required = false) List<String> color,
             Model model) {
 
-        if (categoria != null && (categoria.isEmpty() || "Todas".equalsIgnoreCase(categoria))) {
-            categoria = null;
-        }
+        List<Producto> productos = productoService.buscarPorFiltros(categoria, precioMax, color);
 
-        if (colores != null && colores.isEmpty()) {
-            colores = null;
-        }
-
-        List<Producto> productos = productoService.buscarPorFiltros(categoria, precioMax, colores);
         model.addAttribute("productos", productos);
         model.addAttribute("categoriaSeleccionada", categoria);
         model.addAttribute("precioMaxSeleccionado", precioMax);
-        model.addAttribute("coloresSeleccionados", colores);
+        model.addAttribute("coloresSeleccionados", color);
+
         return "productos";
     }
 }
